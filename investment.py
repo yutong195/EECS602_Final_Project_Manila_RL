@@ -30,9 +30,9 @@ class ship():
         if type(cost_ls) is not list:
             raise TypeError
         for cost in cost_ls:
-            if cost is not int:
+            if type(cost) is not int:
                 raise TypeError
-        if payback is not int:
+        if type(payback) is not int:
             raise TypeError
 
         self.cost = cost_ls
@@ -97,9 +97,9 @@ class port():
         self.type = "port"
         self.name = str(name)  # name of the ship
         # check for type error
-        if cost is not int:
+        if type(cost) is not int:
             raise TypeError
-        if payback is not int:
+        if type(payback) is not int:
             raise TypeError
 
         self.cost = cost
@@ -151,9 +151,9 @@ class shipyard():
         self.type = "shipyard"
         self.name = str(name)  # name of the ship
         # check for type error
-        if cost is not int:
+        if type(cost) is not int:
             raise TypeError
-        if payback is not int:
+        if type(payback) is not int:
             raise TypeError
 
         self.cost = cost
