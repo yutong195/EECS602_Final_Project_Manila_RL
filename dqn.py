@@ -35,7 +35,7 @@ class DeepQNetwork(nn.Module):
         return actions
     
 class DQNAgent(agents.QlearningAgent):
-    def __init__(self, name, money, color, game, gamma=0.9, epsilon=1.0, lr=0.001, input_dims=16, batch_size=30, n_actions = 10, max_memory=100000, eps_min=0.05, eps_step=5e-4, tau=0.005):
+    def __init__(self, name, money, color, game, gamma=0.9, epsilon=0.2, lr=0.001, input_dims=40, batch_size=30, n_actions = 28, max_memory=100000, eps_min=0.05, eps_step=5e-4, tau=0.005):
         super().__init__(name,money,color,game)
         self.gamma = gamma
         self.epsilon = epsilon
@@ -67,7 +67,7 @@ class DQNAgent(agents.QlearningAgent):
                                          dtype=np.float32)
         self.action_memory = np.zeros(self.memory_size, dtype=np.int32)
         self.reward_memory = np.zeros(self.memory_size, dtype=np.float32)
-        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool)
+        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool_)
 
     def set_train_flag(self, flag):
         self.train_flag = flag
@@ -95,15 +95,20 @@ class DQNAgent(agents.QlearningAgent):
             state = T.tensor(currentState).to(self.policy_network.device)
             actions = self.policy_network.forward(state)
             sorted_actions = T.argsort(actions)
+            # print(sorted_actions)
             for action_idx in sorted_actions:
                 action = self.game.action_ls[action_idx.item()]
                 if action in available_action:
+                    return action_idx
+                else:
+                    action = np.random.choice(available_action)
+                    action_idx = self.convertAction(action)
                     return action_idx
         else:
             action = np.random.choice(available_action)
             action_idx = self.convertAction(action)
 
-        return action_idx
+            return action_idx
 
     def learn(self):
         if self.memoryCounter < self.batch_size:
@@ -145,7 +150,7 @@ class DQNAgent(agents.QlearningAgent):
         state = np.array(state,dtype=np.float32)
         action_idx = self.get_available_action(state)
         action = self.game.action_ls[action_idx]
-        #print(action_idx,action.name)
+        print(action_idx,action.name)
         reward = self.computeReward(action)
         self.money -= action.get_cost()
         action.invest(self)

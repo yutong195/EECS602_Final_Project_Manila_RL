@@ -68,7 +68,7 @@ class ship():
         return self.cost[self.invest_idx]
     
     def invest(self,player):
-        if self.get_availability == False:
+        if self.get_availability() == False:
             print("invalide investment, unavailable ship")
             return 
         if self.get_cost() > player.get_money():
@@ -127,7 +127,7 @@ class port():
         return self.cost
     
     def invest(self,player):
-        if self.available == False:
+        if self.get_availability() == False:
             print("invalid investment, unavailable port")
             return
         if self.get_cost() > player.get_money():
@@ -181,7 +181,7 @@ class shipyard():
         return self.cost
     
     def invest(self,player):
-        if self.available == False:
+        if self.get_availability() == False:
             print("invalid investment, unavailable shipyayd")
             return
         if self.get_cost() > player.get_money():

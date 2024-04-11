@@ -139,20 +139,20 @@ class Player():
         '''
         self.available_action = []
         for i in self.game.port_ls:
-            if i.get_availability():
+            if i.get_availability() and i.get_cost() <= self.money:
                 self.available_action.append(i)
         for i in self.game.shipyard_ls:
-            if i.get_availability():
+            if i.get_availability() and i.get_cost() <= self.money:
                 self.available_action.append(i)
         for i in self.game.ship_ls:
-            if i.get_availability():
+            if i.get_availability() and i.get_cost() <= self.money:
                 self.available_action.append(i)
         if self.game.skip.get_availability():
             self.available_action.append(self.game.skip)
-        money = self.money
-        for i in self.available_action:
-            if i.get_cost() > money:
-                self.available_action.remove(i)
+        # money = self.money
+        # for i in self.available_action:
+        #     if i.get_cost() > money:
+        #         self.available_action.remove(i)
         return self.available_action
 
     def next_game(self, game):

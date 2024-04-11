@@ -62,9 +62,9 @@ class QlearningAgent(Player):
         self.epsilon = .95
         self.eps_step = 0.05
         self.action_val_dic = {"Port1" : 0, "Port2" : 1, "Port3" : 2, "Port4": 3, "Port5": 4, "Port6": 5, "Port7": 6, "Port8":7, "Port9": 8,
-                               "Shipyard1" : 3, "Shipyard2" : 4, "Shipyard3" : 5,"Shipyard4" : 3, "Shipyard5" : 4, "Shipyard6" : 5,"Shipyard7" : 3, "Shipyard8" : 4, "Shipyard9" : 5,
-                               "Ship1" : 6, "Ship2" : 7, "Ship3" : 8,"Ship4" : 6, "Ship5" : 7, "Ship6" : 8,"Ship7" : 6, "Ship8" : 7, "Ship9" : 8,
-                               "Skip" : 9}
+                               "Shipyard1" : 9, "Shipyard2" : 10, "Shipyard3" : 11,"Shipyard4" : 12, "Shipyard5" : 13, "Shipyard6" : 14,"Shipyard7" : 15, "Shipyard8" : 16, "Shipyard9" : 17,
+                               "Ship1" : 18, "Ship2" : 19, "Ship3" : 20,"Ship4" : 21, "Ship5" : 22, "Ship6" : 23,"Ship7" : 24, "Ship8" : 25, "Ship9" : 26,
+                               "Skip" : 27}
         
     def set_verbose(self, verbose):
         self.verbose = verbose
@@ -95,7 +95,7 @@ class QlearningAgent(Player):
         action_ls = []
         money = self.get_money()
         for action in self.game.action_ls:
-            if action.get_availability() and action.get_cost() < money:
+            if action.get_availability() and action.get_cost() <= money:
                 action_ls.append(action)
         return action_ls
     
